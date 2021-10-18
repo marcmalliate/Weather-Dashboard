@@ -1,26 +1,103 @@
 
+/* Header styling */
+#header{
+    background-size: cover;
+    background-position-y: 40%;
+    color:white;
+    background-color:teal;
+    position: center;
+}
+
+/* h1 style for city name */
+#header h1{
+    font-size: 300%;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: ;
+
+}
+
+
+/*Jumbotron padding and border */
+.jumbotron {
+    padding: 1rem;
+    border-radius: 0;
+}
+
+/* City Search width */
+#search-city{
+    width:80%;
+}
+
+/* fontawesome magnifying glass icon */
+#search-button-icon{
+    width:15px;
+    display:inline-block;
+}
+
+/*Current weather padding */
+#current-weather {
+    padding-left: 15px;
+}
+
+/* clear storage below list of cities */
+#clear-storage{
+    color:whitesmoke;
+    text-decoration: none;
+    font-size: 1rem;
+    margin: .5em 0em 0em .5em;
+}
+
+/* Weather card styling */
+.weather-card{
+    width: 9rem;
+    background-color: teal;
+    color: white;
+    text-align: center;
+}
+#search-button{
+    background-color: teal;
+}
+
+/* UV coloring scheme for UV display */
+.uv-favorable{
+    background-color: green;
+    border-radius: 5px;
+    color: white;
+}
+
+.uv-moderate{
+    background-color: orange;
+    border-radius: 5px;
+    color: white;
+}
+
+.uv-severe{
+    background-color: red;
+    border-radius: 5px;
+    color: white;
+}
+
 body {
     font-family: 'Merriweather', serif;
     background-image:url("./images/Weather-Background.jpeg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: scroll;
-}
 
-.navbar-brand {
-    font-size: 36px;
+/* Media queries */
+@media only screen and (max-width: 992px) {
+    #search-city{
+        width:100%;
+    }
+    #search-button{
+        width:100%;
+    }
 }
+@media only screen and (max-width: 575px) {
 
-.search-header {
-    font-size: 22px;
-    font-weight: bolder;
+    #fiveDayForecastUl{
+        justify-content: center;
+    }
 }
-
-.city-name {
-    font-size: 34px;
-}
-
-.forecast-date {
-    font-size: 12px;
-}
-

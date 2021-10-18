@@ -1,23 +1,16 @@
-// Set variables
+// Set global variables, including Open Weather Maps API Key
 var owmAPI = "5b17b4444dd1bc8327f49ea4c26869d9";
 var currentCity = "";
 var lastCity = "";
 
-// Error handler for fetch, trying to mimic the AJAX .fail command: https://www.tjvantoll.com/2015/09/13/fetch-and-errors/
-var handleErrors = (response) => {
-    if (!response.ok) {
-        throw Error(response.statusText);
-    }
-    return response;
-}
 
 // Function to get and display the current conditions on Open Weather Maps
 var getCurrentConditions = (event) => {
-    // Get city name from the search box
+    // Obtain city name from the search box
     let city = $('#search-city').val();
     currentCity= $('#search-city').val();
-    // Set the queryURL to fetch from API using weather search - added units=metric
-    let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric" + "&APPID=" + owmAPI;
+    // Set the queryURL to fetch from API using weather search - added units=imperial to fix
+    let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial" + "&APPID=" + owmAPI;
     fetch(queryURL)
     .then(handleErrors)
     .then((response) => {
@@ -44,9 +37,9 @@ var getCurrentConditions = (event) => {
         let currentWeatherHTML = `
             <h3>${response.name} ${currentMoment.format("(MM/DD/YY)")}<img src="${currentWeatherIcon}"></h3>
             <ul class="list-unstyled">
-                <li>Temperature: ${response.main.temp}&#8451;</li>
+                <li>Temperature: ${response.main.temp}&#8457;</li>
                 <li>Humidity: ${response.main.humidity}%</li>
-                <li>Wind Speed: ${response.wind.speed} km/h</li>
+                <li>Wind Speed: ${response.wind.speed} mph</li>
                 <li id="uvIndex">UV Index:</li>
             </ul>`;
         // Append the results to the DOM
@@ -54,8 +47,9 @@ var getCurrentConditions = (event) => {
         // Get the latitude and longitude for the UV search from Open Weather Maps API
         let latitude = response.coord.lat;
         let longitude = response.coord.lon;
-        let uvQueryURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&APPID=" + owmAPI;
-
+        let uvQueryURL = "api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&APPID=" + owmAPI;
+        // API solution for Cross-origin resource sharing (CORS) error: https://cors-anywhere.herokuapp.com/
+        uvQueryURL = "https://cors-anywhere.herokuapp.com/" + uvQueryURL;
         // Fetch the UV information and build the color display for the UV index
         fetch(uvQueryURL)
         .then(handleErrors)
@@ -145,7 +139,7 @@ var renderCities = () => {
         if (lastCity){
             $('#search-city').attr("value", lastCity);
         } else {
-            $('#search-city').attr("value", "Adelaide");
+            $('#search-city').attr("value", "Austin");
         }
     } else {
         // Build key of last city written to localStorage
